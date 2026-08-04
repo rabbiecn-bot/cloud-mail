@@ -44,7 +44,7 @@ jobs:
           cache-dependency-path: "./mail-worker/pnpm-lock.yaml"
 
       - name: 📥 安装依赖 - Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --dangerously-allow-all-builds
         working-directory: ./mail-worker
 
       - name: 📡 禁用 Wrangler 遥测 - Disable wrangler telemetry
