@@ -127,7 +127,6 @@ const zh = {
     regBtn: '注册',
     loginTitle: '输入账号信息以开始使用邮箱系统',
     regTitle: '输入账号密码以开始注册邮箱系统',
-    loginSlogan: '安全、快速、优雅的云端邮箱，随时随地，收发自如。',
     confirmPwd: '确认密码',
     regKeyOptional: '注册码（可选）',
     noAccount: '还没有账号?',
