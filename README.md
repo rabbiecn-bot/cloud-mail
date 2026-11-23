@@ -82,6 +82,30 @@
 - **文件存储**：[Cloudflare R2](https://developers.cloudflare.com/r2/)
 
 
+## GitHub Actions 部署 Secrets 配置
+
+使用仓库自带的 `.github/workflows/deploy-cloudflare.yml` 自动部署时，需要先在仓库 **Settings → Secrets and variables → Actions → New repository secret** 中逐个添加以下 Secrets。
+
+**通用规则：每个 Secret 只填值本身，不要带变量名、不要有多余空格或换行；下表特别注明格式的按格式填写。**
+
+| Secret 名称 | 必需 | 写入格式 | 示例 / 获取方式 |
+| --- | :---: | --- | --- |
+| `CLOUDFLARE_API_TOKEN` | ✅ | Cloudflare API 令牌原文，整串粘贴，不要加引号 | 在 Cloudflare 控制台「我的个人资料 → API 令牌」创建：选「编辑 Cloudflare Workers」模板，并补上 D1、KV、R2 的编辑权限 |
+| `CLOUDFLARE_ACCOUNT_ID` | ✅ | 32 位十六进制字符串 | Cloudflare 控制台首页右侧栏或账户设置中的「账户 ID」 |
+| `D1_DATABASE_ID` | ✅ | UUID 格式 | 形如 `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`；在 D1 数据库详情页复制「数据库 ID」。为空时工作流会跳过部署 |
+| `KV_NAMESPACE_ID` | ✅ | 32 位十六进制字符串 | 在 Workers & Pages → KV 中打开命名空间，复制其 ID。为空时工作流会跳过部署 |
+| `R2_BUCKET_NAME` | ❌ | 存储桶名称原文，不要加引号 | 如 `cloud-mail`；留空则不绑定 R2（工作流会自动删掉 R2 配置段） |
+| `DOMAIN` | ✅ | **JSON 数组格式：必须带英文方括号和双引号，多个域名用英文逗号分隔** | 单域名：`["example.com"]`；多域名：`["example1.com","example2.com"]`。切勿只写裸域名（如 `example.com`），否则后端 JSON 解析失败、域名列表加载不出来 |
+| `ADMIN` | ✅ | 管理员邮箱原文，不要加引号 | 如 `admin@example.com`，即后台管理员账号的邮箱 |
+| `JWT_SECRET` | ✅ | 随机长字符串（建议 32 位以上，字母+数字），不要加引号 | 可用密码生成器生成。它同时是数据库初始化口令：部署后访问 `https://你的域名/api/init/<JWT_SECRET>` 可手动触发初始化 |
+
+补充说明：
+
+- 本工作流只用 Secrets，**Variables（变量）无需配置**。
+- Secrets 只保存在 GitHub 仓库设置里，运行时由工作流注入并写入生成的 `wrangler-action.toml` 完成部署；**不要把真实值写进仓库的任何文件**。
+- 修改任意 Secret 后，需重新运行一次工作流（推送 `mail-vue/**` 或 `mail-worker/**` 的改动，或在 Actions 页手动 Run workflow）才会生效。
+
+
 ## 赞助
 
 
