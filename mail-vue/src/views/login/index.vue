@@ -1,31 +1,15 @@
 <template>
   <div id="login-box">
-    <div class="aurora" v-if="!settingStore.settings.background">
-      <div class="aurora-blob blob-a"></div>
-      <div class="aurora-blob blob-b"></div>
-      <div class="aurora-blob blob-c"></div>
-      <div class="aurora-grid"></div>
+    <div id="background-wrap" v-if="!settingStore.settings.background">
+      <div class="x1 cloud"></div>
+      <div class="x2 cloud"></div>
+      <div class="x3 cloud"></div>
+      <div class="x4 cloud"></div>
+      <div class="x5 cloud"></div>
     </div>
-    <div v-else class="custom-bg" :style="background"></div>
-    <div class="hero">
-      <div class="hero-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/></svg>
-      </div>
-      <div class="hero-name">小莫邮局</div>
-      <div class="hero-wordmark">XIAOMO&nbsp;MAIL</div>
-      <p class="hero-slogan">{{ $t('loginSlogan') }}</p>
-    </div>
+    <div v-else :style="background"></div>
     <div class="form-wrapper">
       <div class="container">
-        <div class="brand-row">
-          <div class="brand-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M4 7.5l8 6 8-6"/></svg>
-          </div>
-          <div class="brand-text">
-            <span class="brand-name">小莫邮局</span>
-            <span class="brand-sub">XIAOMO MAIL</span>
-          </div>
-        </div>
         <span class="form-title">{{ settingStore.settings.title }}</span>
         <span class="form-desc" v-if="show === 'login'">{{ $t('loginTitle') }}</span>
         <span class="form-desc" v-else>{{ $t('regTitle') }}</span>
@@ -410,166 +394,6 @@ function submitRegister() {
 
 <style lang="scss" scoped>
 
-#login-box {
-  position: relative;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #060a16;
-  font-family: inherit;
-}
-
-/* ---------- 背景：深邃极光（未设置自定义背景图时） ---------- */
-.aurora {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: linear-gradient(155deg, #0c1230 0%, #080d1f 46%, #05090f 100%);
-}
-
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  will-change: transform;
-}
-
-.blob-a {
-  width: 56vw;
-  height: 56vw;
-  left: -14vw;
-  top: -18vw;
-  background: radial-gradient(circle at 35% 35%, rgba(99, 102, 241, 0.55), rgba(99, 102, 241, 0) 65%);
-  animation: drift-a 26s ease-in-out infinite alternate;
-}
-
-.blob-b {
-  width: 44vw;
-  height: 44vw;
-  left: 22vw;
-  bottom: -22vw;
-  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.42), rgba(139, 92, 246, 0) 65%);
-  animation: drift-b 32s ease-in-out infinite alternate;
-}
-
-.blob-c {
-  width: 30vw;
-  height: 30vw;
-  right: 6vw;
-  top: -10vw;
-  background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.30), rgba(34, 211, 238, 0) 65%);
-  animation: drift-a 38s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes drift-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(6vw, 4vh, 0) scale(1.12); }
-}
-
-@keyframes drift-b {
-  from { transform: translate3d(0, 0, 0) scale(1.05); }
-  to   { transform: translate3d(-5vw, -5vh, 0) scale(0.94); }
-}
-
-.aurora-grid {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.13) 1px, transparent 1.4px);
-  background-size: 26px 26px;
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 38% 42%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 90% 80% at 38% 42%, #000 30%, transparent 75%);
-}
-
-.aurora::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 120% 90% at 50% 110%, transparent 55%, rgba(2, 4, 10, 0.55) 100%);
-}
-
-/* ---------- 自定义背景图 ---------- */
-.custom-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
-
-.custom-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, rgba(4, 8, 18, 0.42) 0%, rgba(4, 8, 18, 0.10) 55%, rgba(4, 8, 18, 0.28) 100%);
-}
-
-/* ---------- 左侧品牌区（桌面） ---------- */
-.hero {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 6.5vw;
-  max-width: 600px;
-  pointer-events: none;
-  animation: hero-in 0.9s cubic-bezier(0.22, 0.8, 0.3, 1) both;
-  @media (max-width: 1024px) {
-    display: none;
-  }
-}
-
-@keyframes hero-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.hero-mark {
-  width: 58px;
-  height: 58px;
-  border-radius: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #06b6d4 130%);
-  box-shadow: 0 18px 38px -12px rgba(99, 102, 241, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  margin-bottom: 30px;
-
-  svg {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-.hero-name {
-  font-size: 58px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-  color: #fff;
-  text-shadow: 0 6px 34px rgba(3, 6, 18, 0.45);
-}
-
-.hero-wordmark {
-  margin-top: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.52em;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.hero-slogan {
-  margin-top: 22px;
-  font-size: 16.5px;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.74);
-  max-width: 400px;
-}
-
-/* ---------- 右侧表单 ---------- */
 .form-wrapper {
   position: fixed;
   right: 0;
@@ -585,170 +409,76 @@ function submitRegister() {
 
 .container {
   background: v-bind(loginOpacity);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  padding-left: 46px;
-  padding-right: 46px;
+  padding-left: 40px;
+  padding-right: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 460px;
+  width: 450px;
   height: 100%;
-  border-left: 1px solid rgba(133, 147, 180, 0.28);
-  box-shadow: -28px 0 70px rgba(2, 6, 17, 0.28);
-  animation: panel-in 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+  border-left: 1px solid var(--login-border);
+  box-shadow: var(--el-box-shadow-light);
   @media (max-width: 1024px) {
     padding: 20px 18px;
     width: 384px;
     margin-left: 18px;
   }
   @media (max-width: 767px) {
-    border: 1px solid rgba(133, 147, 180, 0.35);
-    padding: 26px 22px;
-    border-radius: 20px;
+    border: 1px solid var(--login-border);
+    padding: 20px 18px;
+    border-radius: 6px;
     height: fit-content;
     width: 100%;
     margin-right: 18px;
     margin-left: 18px;
-    box-shadow: 0 30px 70px -18px rgba(2, 6, 17, 0.5);
   }
 
-  .brand-row {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    margin-bottom: 36px;
+  .btn {
+    height: 36px;
+    width: 100%;
+    border-radius: 6px;
   }
 
-  .brand-mark {
-    width: 42px;
-    height: 42px;
-    flex: none;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #06b6d4 130%);
-    box-shadow: 0 10px 22px -8px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-
-    svg {
-      width: 23px;
-      height: 23px;
-    }
-  }
-
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.25;
-  }
-
-  .brand-name {
-    font-size: 17.5px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--el-text-color-primary);
-  }
-
-  .brand-sub {
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: 0.42em;
+  .form-desc {
+    margin-top: 5px;
+    margin-bottom: 18px;
     color: var(--form-desc-color);
   }
 
   .form-title {
-    font-weight: 750;
-    font-size: 25px !important;
-    letter-spacing: 0.01em;
+    font-weight: bold;
+    font-size: 22px !important;
   }
 
-  .form-desc {
-    margin-top: 7px;
-    margin-bottom: 28px;
-    font-size: 13.5px;
-    color: var(--form-desc-color);
-  }
+  .switch {
+    margin-top: 20px;
+    text-align: center;
 
-  .el-input {
-    height: 46px;
-    width: 100%;
-    margin-bottom: 16px;
-
-    :deep(.el-input__inner) {
-      height: 44px;
-      font-size: 14.5px;
+    span {
+      color: var(--login-switch-color);
+      cursor: pointer;
     }
   }
 
   :deep(.el-input__wrapper) {
-    border-radius: 12px;
+    border-radius: 6px;
     background: var(--el-bg-color);
-    box-shadow: 0 0 0 1px var(--el-border-color) inset;
-    transition: box-shadow 0.2s ease;
-  }
-
-  :deep(.el-input__wrapper:hover) {
-    box-shadow: 0 0 0 1px var(--el-border-color-hover) inset;
-  }
-
-  :deep(.el-input__wrapper.is-focus) {
-    box-shadow: 0 0 0 1px var(--el-color-primary) inset, 0 0 0 4px rgba(99, 102, 241, 0.16);
   }
 
   .email-input :deep(.el-input__wrapper) {
-    border-radius: 12px 0 0 12px;
+    border-radius: 6px 0 0 6px;
     background: var(--el-bg-color);
   }
 
-  .btn {
-    height: 46px;
+  .el-input {
+    height: 38px;
     width: 100%;
-    margin-top: 6px;
-    border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    color: #fff;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 60%, #9333ea 100%);
-    box-shadow: 0 14px 28px -10px rgba(109, 72, 237, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
-  }
+    margin-bottom: 18px;
 
-  .btn:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    box-shadow: 0 18px 34px -10px rgba(109, 72, 237, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  }
-
-  .btn:active {
-    transform: translateY(0);
-    filter: brightness(0.98);
-  }
-
-  .switch {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 13.5px;
-    color: var(--form-desc-color);
-
-    span {
-      color: var(--login-switch-color);
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    span:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    :deep(.el-input__inner) {
+      height: 36px;
     }
   }
-}
-
-@keyframes panel-in {
-  from { opacity: 0; transform: translateX(22px); }
-  to   { opacity: 1; transform: translateX(0); }
 }
 
 :deep(.el-select-dropdown__item) {
@@ -765,8 +495,7 @@ function submitRegister() {
   padding-left: 8px !important;
   padding-right: 4px !important;
   background: var(--el-bg-color);
-  border-radius: 0 12px 12px 0;
-  box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  border-radius: 0 8px 8px 0;
 }
 
 .register-turnstile {
@@ -790,10 +519,90 @@ function submitRegister() {
   width: 180px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .aurora-blob, .hero, .container {
-    animation: none;
+
+#login-box {
+  background: linear-gradient(to bottom, #2980b9, #6dd5fa, #fff);
+  font: 100% Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+
+#background-wrap {
+  height: 100%;
+  z-index: 0;
+}
+
+@keyframes animateCloud {
+  0% {
+    margin-left: -500px;
   }
+
+  100% {
+    margin-left: 100%;
+  }
+}
+
+.x1 {
+  animation: animateCloud 30s linear infinite;
+  transform: scale(0.65);
+}
+
+.x2 {
+  animation: animateCloud 15s linear infinite;
+  transform: scale(0.3);
+}
+
+.x3 {
+  animation: animateCloud 25s linear infinite;
+  transform: scale(0.5);
+}
+
+.x4 {
+  animation: animateCloud 13s linear infinite;
+  transform: scale(0.4);
+}
+
+.x5 {
+  animation: animateCloud 20s linear infinite;
+  transform: scale(0.55);
+}
+
+.cloud {
+  background: linear-gradient(to bottom, #fff 5%, #f1f1f1 100%);
+  border-radius: 100px;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+  height: 120px;
+  width: 350px;
+  position: relative;
+}
+
+.cloud:after,
+.cloud:before {
+  content: "";
+  position: absolute;
+  background: #fff;
+  z-index: -1;
+}
+
+.cloud:after {
+  border-radius: 100px;
+  height: 100px;
+  left: 50px;
+  top: -50px;
+  width: 100px;
+}
+
+.cloud:before {
+  border-radius: 200px;
+  height: 180px;
+  width: 180px;
+  right: 50px;
+  top: -90px;
 }
 
 </style>
